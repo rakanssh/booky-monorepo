@@ -6,7 +6,7 @@ export type ApiResponse<T> = {
   totalItems: number;
 };
 
-type PaginationParams = {
+export type PaginationParams = {
   page?: string;
   limit?: string;
 };
