@@ -11,7 +11,7 @@ import java.util.List;
 import lombok.Data;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.JoinColumn;  
-
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Data
 @Entity
 @Table(name = "books")
@@ -34,6 +34,7 @@ public class Book {
         joinColumns = @JoinColumn(name = "book_id"),
         inverseJoinColumns = @JoinColumn(name = "author_id")
     )
+    @JsonManagedReference
     private List<Author> authors;
     @ManyToMany(mappedBy = "books")
     private List<ReadingList> readingLists;

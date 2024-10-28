@@ -9,7 +9,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.ManyToMany;
 import java.util.List;
 import lombok.Data;
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
 @Data
 @Entity
 @Table(name = "authors")
@@ -22,5 +22,6 @@ public class Author {
     @Column(name = "olid")
     private String olid;
     @ManyToMany(mappedBy = "authors")
+    @JsonBackReference
     private List<Book> books;
 }   
