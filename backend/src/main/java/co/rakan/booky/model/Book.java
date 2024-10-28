@@ -21,8 +21,6 @@ public class Book {
     private Long id;
     @Column(name = "title")
     private String title;       
-    @Column(name = "author")
-    private String author;
     @Column(name = "pages_no")
     private int pagesNo;
     // Book covers can be derived from ISBN, likely unnecessary to store this.
