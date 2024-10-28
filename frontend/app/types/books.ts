@@ -1,9 +1,10 @@
+import { Author } from "./Authors";
+
 export type Book = {
-  id: string;
-  title: string;
-  author: string;
+  id: number;
+  title: Author;
+  authors: Author[];
   pagesNo: number;
-  coverUrl: string;
 };
 
 export type AddBookDto = {
