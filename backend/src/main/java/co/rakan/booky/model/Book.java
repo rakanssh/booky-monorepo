@@ -25,8 +25,9 @@ public class Book {
     private String author;
     @Column(name = "pages_no")
     private int pagesNo;
-    @Column(name = "cover_url")
-    private String coverUrl;
+    // Book covers can be derived from ISBN, likely unnecessary to store this.
+    // @Column(name = "cover_url")
+    // private String coverUrl;
     @ManyToMany
     @JoinTable(
         name = "book_author",
