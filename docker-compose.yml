@@ -12,10 +12,23 @@ services:
     ports:
       - "5432:5432"
 
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - db
+
   backend:
     build: ./backend
+    volumes:
+      - ./backend:/app
+      - /root/.m2
     ports:
-      - "3000:3000"
+      - "3000:8080"
     environment:
       DB_USER: root
       DB_PASSWORD: root
@@ -25,10 +38,13 @@ services:
 
   frontend:
     build: ./frontend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
     environment:
-      API_URL: http://backend:3000
+      API_URL: http://backend:8080
     ports:
-      - "3001:3001"
+      - "3001:5173"
     depends_on:
       - backend
 
