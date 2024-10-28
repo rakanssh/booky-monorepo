@@ -5,6 +5,8 @@ import co.rakan.booky.repository.BookRepository;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import java.util.Collections;
 import java.util.ArrayList;
@@ -21,7 +23,7 @@ import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 
 @Service
 public class BookServiceImpl implements BookService {
-    private final String OPEN_LIBRARY_BASE_URL = "https://openlibrary.org/";
+    private static final String OPEN_LIBRARY_BASE_URL = "https://openlibrary.org/";
 
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
@@ -36,6 +38,11 @@ public class BookServiceImpl implements BookService {
                 .followRedirect(true)))  
             .build();
     }
+
+    @Override
+    public Page<Book> getAllBooks(Pageable p) {
+        return bookRepository.findAll(p);
+    }   
 
     @Override
     public Book addBookWithAuthorsByIsbn(String isbn) {
