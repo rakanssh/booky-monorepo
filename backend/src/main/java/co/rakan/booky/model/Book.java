@@ -23,6 +23,8 @@ public class Book {
     private String title;       
     @Column(name = "pages_no")
     private int pagesNo;
+    @Column(name = "isbn", unique = true)
+    private String isbn;
     // Book covers can be derived from ISBN, likely unnecessary to store this.
     // @Column(name = "cover_url")
     // private String coverUrl;

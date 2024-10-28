@@ -39,27 +39,32 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book addBookWithAuthorsByIsbn(String isbn) {
+        Optional<Book> book = bookRepository.findByIsbn(isbn);
+        if(book.isPresent()) {
+            return book.get();
+        }
         OpenLibraryBookResponse bookResponse = getBookByIsbn(isbn); 
-        Book book = new Book(); 
-        book.setTitle(bookResponse.getTitle());
-        book.setPagesNo(bookResponse.getNumber_of_pages());
-        book.setAuthors(new ArrayList<>());
+        Book newBook = new Book(); 
+        newBook.setTitle(bookResponse.getTitle());
+        newBook.setPagesNo(bookResponse.getNumber_of_pages());
+        newBook.setIsbn(isbn);
+        newBook.setAuthors(new ArrayList<>());
         
         for (OpenLibraryBookResponse.AuthorReference authorReference : bookResponse.getAuthors()) {
             Optional<Author> author = authorRepository.findByOlid(authorReference.getKey());
             if(author.isPresent()) {
-                book.getAuthors().add(author.get());
+                newBook.getAuthors().add(author.get());
             }else{
                 OpenLibraryAuthorResponse authorResponse = getAuthorByKey(authorReference.getKey());
                 Author newAuthor = new Author();
                 newAuthor.setName(authorResponse.getName());
                 newAuthor.setOlid(authorReference.getKey());
                 authorRepository.save(newAuthor);
-                book.getAuthors().add(newAuthor);
+                newBook.getAuthors().add(newAuthor);
             }
         }
-        bookRepository.save(book);
-        return book;
+        bookRepository.save(newBook);
+        return newBook;
     }
 
     private OpenLibraryBookResponse getBookByIsbn(String isbn) {
