@@ -11,7 +11,7 @@ import java.util.List;
 import lombok.Data;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.JoinColumn;  
-
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Data
 @Entity
 @Table(name = "books")
@@ -21,18 +21,20 @@ public class Book {
     private Long id;
     @Column(name = "title")
     private String title;       
-    @Column(name = "author")
-    private String author;
     @Column(name = "pages_no")
     private int pagesNo;
-    @Column(name = "cover_url")
-    private String coverUrl;
+    @Column(name = "isbn", unique = true)
+    private String isbn;
+    // Book covers can be derived from ISBN, likely unnecessary to store this.
+    // @Column(name = "cover_url")
+    // private String coverUrl;
     @ManyToMany
     @JoinTable(
         name = "book_author",
         joinColumns = @JoinColumn(name = "book_id"),
         inverseJoinColumns = @JoinColumn(name = "author_id")
     )
+    @JsonManagedReference
     private List<Author> authors;
     @ManyToMany(mappedBy = "books")
     private List<ReadingList> readingLists;
