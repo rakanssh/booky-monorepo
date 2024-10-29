@@ -10,6 +10,7 @@ import "./mantine.css";
 
 import { AppShell, ColorSchemeScript, MantineProvider } from "@mantine/core";
 import { NavigationBar, Header } from "./components";
+import { Notifications } from "@mantine/notifications";
 
 export const links: LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -36,6 +37,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         <MantineProvider>
+          <Notifications position="top-left" autoClose={5000} limit={5} />
           <AppShell
             padding="md"
             navbar={{
@@ -51,6 +53,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             <AppShell.Navbar p="md" display="block">
               <NavigationBar />
             </AppShell.Navbar>
+
             <AppShell.Main>{children}</AppShell.Main>
           </AppShell>
         </MantineProvider>
