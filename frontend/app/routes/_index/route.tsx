@@ -6,9 +6,9 @@ import type {
 import { json } from "@remix-run/node";
 import { booksService } from "../../services/books.server";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
-import { Divider, Group, Pagination, Paper, Title } from "@mantine/core";
+import { Divider, Group, Pagination, Paper, Stack, Title } from "@mantine/core";
 import { useState } from "react";
-import BooksTable from "./components/BooksTable";
+import BookCatalogue from "./components/BookCatalogue";
 import AddBookSection from "./components/AddBookSection";
 import { ErrorResponse } from "../../types/api";
 export const meta: MetaFunction = () => {
@@ -23,10 +23,10 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const page = (
     parseInt(url.searchParams.get("page") ?? "1", 10) - 1
   ).toString();
-  const size = url.searchParams.get("size") ?? 10;
+  const size = url.searchParams.get("size") ?? "8";
   const books = await booksService.getBooks({
-    page,
-    size: size as string,
+    page: page ?? "1",
+    size: size ?? "8",
   });
   return json(books);
 }
@@ -51,7 +51,7 @@ export default function Index() {
   const [page, setPage] = useState(
     parseInt(searchParams.get("page") ?? "1", 10)
   );
-  const [size] = useState(parseInt(searchParams.get("size") ?? "10", 10));
+  const [size] = useState(parseInt(searchParams.get("size") ?? "6", 6));
 
   const handlePageChange = (value: number) => {
     setPage(value);
@@ -63,15 +63,18 @@ export default function Index() {
       <Title>Books</Title>
       <Divider />
       <Paper>
-        <Group>
+        <Stack gap="md">
           <AddBookSection />
-          <BooksTable books={data.content} />
-          <Pagination
-            total={data.totalPages}
-            value={page}
-            onChange={handlePageChange}
-          />
-        </Group>
+
+          <Group justify="center">
+            <BookCatalogue books={data.content} />
+            <Pagination
+              total={data.totalPages}
+              value={page}
+              onChange={handlePageChange}
+            />
+          </Group>
+        </Stack>
       </Paper>
     </>
   );

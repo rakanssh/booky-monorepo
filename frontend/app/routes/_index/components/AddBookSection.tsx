@@ -1,4 +1,4 @@
-import { ActionIcon, Input, Button } from "@mantine/core";
+import { ActionIcon, Input, Text, Group, Paper } from "@mantine/core";
 import { IconPlus } from "@tabler/icons-react";
 import { useState, useEffect } from "react";
 import { useFetcher } from "@remix-run/react";
@@ -31,16 +31,20 @@ export default function AddBookSection() {
 
   return (
     <fetcher.Form method="post">
-      <Input
-        name="isbn"
-        placeholder="ISBN"
-        value={isbn}
-        disabled={fetcher.state === "submitting"}
-        onChange={(e) => setIsbn(e.target.value)}
-      />
-      <Button type="submit" variant="light">
-        <IconPlus />
-      </Button>
+      <Paper pt="md">
+        <Group>
+          <Input
+            name="isbn"
+            placeholder="ISBN"
+            value={isbn}
+            disabled={fetcher.state === "submitting"}
+            onChange={(e) => setIsbn(e.target.value)}
+          />
+          <ActionIcon type="submit" variant="light">
+            <IconPlus />
+          </ActionIcon>
+        </Group>
+      </Paper>
     </fetcher.Form>
   );
 }
