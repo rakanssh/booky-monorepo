@@ -51,7 +51,7 @@ export default function Index() {
   const [page, setPage] = useState(
     parseInt(searchParams.get("page") ?? "1", 10)
   );
-  const [size] = useState(parseInt(searchParams.get("size") ?? "6", 6));
+  const [size] = useState(parseInt(searchParams.get("size") ?? "6", 10));
 
   const handlePageChange = (value: number) => {
     setPage(value);
@@ -65,9 +65,8 @@ export default function Index() {
       <Paper>
         <Stack gap="md">
           <AddBookSection />
-
+          <BookCatalogue books={data.content} />
           <Group justify="center">
-            <BookCatalogue books={data.content} />
             <Pagination
               total={data.totalPages}
               value={page}
