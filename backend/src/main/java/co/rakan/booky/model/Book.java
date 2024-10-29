@@ -12,6 +12,7 @@ import lombok.Data;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.JoinColumn;  
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 @Data
 @Entity
 @Table(name = "books")
@@ -37,5 +38,6 @@ public class Book {
     @JsonManagedReference
     private List<Author> authors;
     @ManyToMany(mappedBy = "books")
+    @JsonBackReference
     private List<ReadingList> readingLists;
 }
