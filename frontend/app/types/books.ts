@@ -1,4 +1,4 @@
-import { Author } from "./Authors";
+import { Author } from "./";
 
 export type Book = {
   id: number;
@@ -10,9 +10,4 @@ export type Book = {
 
 export type AddBookDto = {
   isbn: string;
-};
-
-export type ReadingList = {
-  id: string;
-  books: Book[];
 };

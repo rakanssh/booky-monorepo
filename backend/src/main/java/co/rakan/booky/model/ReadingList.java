@@ -5,12 +5,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.JoinColumn;
 import java.util.List;
 import lombok.Data;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Data
 @Entity
@@ -26,6 +28,12 @@ public class ReadingList {
         joinColumns = @JoinColumn(name = "reading_list_id"),
         inverseJoinColumns = @JoinColumn(name = "book_id")
     )
-    @JsonManagedReference
+    @JsonBackReference
     private List<Book> books;
+
+    @Transient
+    @JsonProperty("bookCount")
+    public int getBookCount() {
+        return books != null ? books.size() : 0;
+    }
 }
