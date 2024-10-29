@@ -1,4 +1,4 @@
-import { QueryParams } from "../types/api";
+import { ErrorResponse, QueryParams } from "../types/api";
 
 const API_BASE_URL = process.env.API_URL ?? "http://backend:8080";
 
@@ -19,8 +19,7 @@ async function fetchApi<T>(
   );
 
   if (!response.ok) {
-    console.error(response);
-    throw new Error(`API ERROR: ${response.statusText}`);
+    throw new Error(((await response.json()) as ErrorResponse).message);
   }
 
   return response.json();

@@ -1,6 +1,5 @@
 import type {
   ActionFunctionArgs,
-  ErrorResponse,
   LoaderFunctionArgs,
   MetaFunction,
 } from "@remix-run/node";
@@ -11,7 +10,7 @@ import { Divider, Group, Pagination, Paper, Title } from "@mantine/core";
 import { useState } from "react";
 import BooksTable from "./components/BooksTable";
 import AddBookSection from "./components/AddBookSection";
-
+import { ErrorResponse } from "../../types/api";
 export const meta: MetaFunction = () => {
   return [
     { title: "Booky" },
@@ -40,7 +39,7 @@ export async function action({ request }: ActionFunctionArgs) {
     return json({ success: true });
   } catch (error) {
     return json(
-      { success: false, error: (error as ErrorResponse).statusText },
+      { success: false, error: (error as ErrorResponse).message },
       { status: (error as ErrorResponse).status }
     );
   }

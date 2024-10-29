@@ -20,7 +20,7 @@ import co.rakan.booky.dto.OpenLibraryBookResponse;
 
 import reactor.netty.http.client.HttpClient;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
-
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 @Service
 public class BookServiceImpl implements BookService {
     private static final String OPEN_LIBRARY_BASE_URL = "https://openlibrary.org/";
@@ -76,12 +76,16 @@ public class BookServiceImpl implements BookService {
 
     private OpenLibraryBookResponse getBookByIsbn(String isbn) {
         String url = "/isbn/" + isbn;
+        try{
         return webClient.get()
             .uri(url)
             .headers(headers -> headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON)))
             .retrieve()
             .bodyToMono(OpenLibraryBookResponse.class)
             .block();
+        } catch(WebClientResponseException.NotFound e){
+            throw new Error("ISBN not found");
+        }
     }
 
     private OpenLibraryAuthorResponse getAuthorByKey(String key) {
