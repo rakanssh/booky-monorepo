@@ -8,9 +8,15 @@ import {
 import type { LinksFunction } from "@remix-run/node";
 import "./mantine.css";
 
-import { AppShell, ColorSchemeScript, MantineProvider } from "@mantine/core";
+import {
+  AppShell,
+  ColorSchemeScript,
+  Group,
+  MantineProvider,
+} from "@mantine/core";
 import { NavigationBar, Header } from "./components";
 import { Notifications } from "@mantine/notifications";
+import { useState } from "react";
 
 export const links: LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -26,6 +32,7 @@ export const links: LinksFunction = () => [
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  const [navbarOpen, setNavbarOpen] = useState(false);
   return (
     <html lang="en">
       <head>
@@ -43,12 +50,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
             navbar={{
               width: 60,
               breakpoint: "sm",
-              collapsed: { mobile: false },
+              collapsed: { mobile: navbarOpen },
             }}
             header={{ height: 48 }}
           >
             <AppShell.Header>
-              <Header />
+              <Group h="100%" px="md" align="center" justify="flex-start">
+                <Header navbarOpen={navbarOpen} setNavbarOpen={setNavbarOpen} />
+              </Group>
             </AppShell.Header>
             <AppShell.Navbar p="md" display="block">
               <NavigationBar />
