@@ -36,7 +36,7 @@ export interface ErrorResponse {
 
 export type PaginationParams = {
   page?: string;
-  limit?: string;
+  size?: string;
 };
 
 export interface QueryParams extends PaginationParams {

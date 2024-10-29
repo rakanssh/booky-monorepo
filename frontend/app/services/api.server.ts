@@ -1,6 +1,6 @@
 import { QueryParams } from "../types/api";
 
-const API_BASE_URL = process.env.API_URL ?? "http://localhost:3000";
+const API_BASE_URL = process.env.API_URL ?? "http://backend:8080";
 
 async function fetchApi<T>(
   endpoint: string,
