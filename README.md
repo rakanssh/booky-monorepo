@@ -5,7 +5,7 @@ The application may be ran using Docker, and comes preconfigured for development
 ## Features
 - Add books to the system by their ISBN (Data fetched from Open Library)
 - Create and manage reading lists
-- Add books to reading lists
+- Add books to/remove books from reading lists
 - Browse books within a reading list
 
 ## Tech Stack
