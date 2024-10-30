@@ -1,8 +1,7 @@
-import { ActionIcon, Table } from "@mantine/core";
+import { ActionIcon, Table, Input } from "@mantine/core";
 import { Book } from "../../../types";
 import { IconMinus, IconPlus } from "@tabler/icons-react";
 import { useFetcher } from "@remix-run/react";
-import { notifications } from "@mantine/notifications";
 
 type BookTableProps = {
   books: Book[];
@@ -12,34 +11,28 @@ type BookTableProps = {
 export default function BookTable({ books, readingListId }: BookTableProps) {
   const fetcher = useFetcher();
 
-  const handleBookAction = async (bookId: number, action: "add" | "remove") => {
-    try {
-      await fetcher.submit(
-        { bookId: bookId.toString() },
-        {
-          method: action === "add" ? "PATCH" : "DELETE",
-          action: `/api/reading-lists/${readingListId}/books`,
-        }
-      );
-    } catch (error) {
-      notifications.show({
-        title: "Error",
-        message: `Failed to ${action} book`,
-        color: "red",
-      });
-    }
-  };
-
   const addBook = (bookId: number) => (
-    <ActionIcon onClick={() => handleBookAction(bookId, "add")}>
-      <IconPlus />
-    </ActionIcon>
+    <fetcher.Form
+      method="PATCH"
+      action={`/api/reading-lists/${readingListId}/books`}
+    >
+      <Input type="hidden" name="bookId" value={bookId} />
+      <ActionIcon type="submit">
+        <IconPlus />
+      </ActionIcon>
+    </fetcher.Form>
   );
 
   const removeBook = (bookId: number) => (
-    <ActionIcon onClick={() => handleBookAction(bookId, "remove")}>
-      <IconMinus />
-    </ActionIcon>
+    <fetcher.Form
+      method="DELETE"
+      action={`/api/reading-lists/${readingListId}/books`}
+    >
+      <Input type="hidden" name="bookId" value={bookId} />
+      <ActionIcon type="submit">
+        <IconMinus />
+      </ActionIcon>
+    </fetcher.Form>
   );
 
   return (
