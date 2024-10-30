@@ -1,6 +1,6 @@
 # Booky
 This is an example application built using Spring Boot, PostgreSQL, and Remix. The application implements basic CRUD using simple interfaces to facilitate communication between the Backend server and the 'Backend' of the Remix app, as well as calls to an external API to fetch data (Open Library).
-The application may be ran using Docker, and comes preconfigured for development and debugging. The projects were initialized using [Spring Initializr](https://start.spring.io/), and create-remix. A pg-admin instance is also initialized for DB management.
+The application may be ran using Docker, and comes preconfigured for development and debugging. The projects were initialized using [Spring Initializr](https://start.spring.io/), and create-remix. A pg-admin instance is also included for DB management.
 
 ## Features
 - Add books to the system by their ISBN (Data fetched from Open Library)
