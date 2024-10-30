@@ -23,4 +23,8 @@ export const readingListsService = {
     }),
   createReadingList: async (name: string) =>
     api.post<ReadingList>("/api/reading-lists", { name }),
+  addBook: async (id: string, bookId: string) =>
+    api.patch<ReadingList>(`/api/reading-lists/${id}/books`, { bookId }),
+  removeBook: async (id: string, bookId: string) =>
+    api.delete<ReadingList>(`/api/reading-lists/${id}/books`, { bookId }),
 };

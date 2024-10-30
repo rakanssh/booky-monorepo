@@ -1,12 +1,47 @@
 import { ActionIcon, Table } from "@mantine/core";
 import { Book } from "../../../types";
 import { IconMinus, IconPlus } from "@tabler/icons-react";
+import { useFetcher } from "@remix-run/react";
+import { notifications } from "@mantine/notifications";
 
 type BookTableProps = {
   books: Book[];
+  readingListId: string;
 };
 
-export default function BookTable({ books }: BookTableProps) {
+export default function BookTable({ books, readingListId }: BookTableProps) {
+  const fetcher = useFetcher();
+
+  const handleBookAction = async (bookId: number, action: "add" | "remove") => {
+    try {
+      await fetcher.submit(
+        { bookId: bookId.toString() },
+        {
+          method: action === "add" ? "PATCH" : "DELETE",
+          action: `/api/reading-lists/${readingListId}/books`,
+        }
+      );
+    } catch (error) {
+      notifications.show({
+        title: "Error",
+        message: `Failed to ${action} book`,
+        color: "red",
+      });
+    }
+  };
+
+  const addBook = (bookId: number) => (
+    <ActionIcon onClick={() => handleBookAction(bookId, "add")}>
+      <IconPlus />
+    </ActionIcon>
+  );
+
+  const removeBook = (bookId: number) => (
+    <ActionIcon onClick={() => handleBookAction(bookId, "remove")}>
+      <IconMinus />
+    </ActionIcon>
+  );
+
   return (
     <Table>
       <Table.Thead>
@@ -24,7 +59,9 @@ export default function BookTable({ books }: BookTableProps) {
             key={book.id}
             {...(book.inReadingList ? { bg: "green.1" } : {})}
           >
-            <Table.Td></Table.Td>
+            <Table.Td>
+              {book.inReadingList ? removeBook(book.id) : addBook(book.id)}
+            </Table.Td>
             <Table.Td>{book.title}</Table.Td>
             <Table.Td>
               {book.authors.map((author) => author.name).join(", ")}

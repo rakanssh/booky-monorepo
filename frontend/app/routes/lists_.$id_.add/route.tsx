@@ -40,7 +40,10 @@ export default function Add() {
       <Divider />
       <Paper>
         <Stack gap="md">
-          <BookTable books={readingListBooks.content} />
+          <BookTable
+            books={readingListBooks.content}
+            readingListId={readingList.id}
+          />
           <Group justify="center">
             <Pagination
               total={readingListBooks.totalPages}
