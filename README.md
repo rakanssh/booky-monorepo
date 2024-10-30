@@ -68,7 +68,7 @@ DB_NAME=booky
 ├── frontend/           # Remix application
 └── docker-compose.yml  # docker-compose file
 ```
-### Development
+## Development
 
 The application is configured for development, and supports hot-reloading and remote debugging.
 
@@ -76,7 +76,7 @@ The following debug ports are exposed:
 - Frontend: 9229
 - Backend: 5005
 
-#### Example VSCode debugger config:
+### Example VSCode debugger config:
 ```JSON
 {
   "version": "0.2.0",
