@@ -1,7 +1,8 @@
 import { ActionIcon, Group, Table } from "@mantine/core";
 import { ReadingList } from "../../../types";
-import { IconEdit, IconEye, IconPlus } from "@tabler/icons-react";
-import { Link } from "@remix-run/react";
+import { IconEdit, IconEye, IconPlus, IconTrash } from "@tabler/icons-react";
+import { Link, useFetcher } from "@remix-run/react";
+import { notifications } from "@mantine/notifications";
 
 interface ReadingListTableProps {
   readingLists: ReadingList[];
@@ -10,6 +11,15 @@ interface ReadingListTableProps {
 export default function ReadingListTable({
   readingLists,
 }: ReadingListTableProps) {
+  const fetcher = useFetcher();
+
+  const deleteReadingList = (id: string) => (
+    <fetcher.Form method="DELETE" action={`/api/reading-lists/${id}`}>
+      <ActionIcon variant="subtle" type="submit" color="red">
+        <IconTrash />
+      </ActionIcon>
+    </fetcher.Form>
+  );
   return (
     <Table>
       <Table.Thead>
@@ -23,8 +33,9 @@ export default function ReadingListTable({
       <Table.Tbody>
         {readingLists.map((readingList) => (
           <Table.Tr key={readingList.id}>
-            <Table.Td w={100}>
+            <Table.Td w={130}>
               <Group gap="xs">
+                {deleteReadingList(readingList.id)}
                 <ActionIcon
                   variant="subtle"
                   component={Link}

@@ -13,4 +13,5 @@ public interface ReadingListService {
     public ReadingList getReadingList(Long id);
     public Page<ReadingList> getReadingLists(Pageable p);
     public Page<Book> getReadingListBooks(Long id, Pageable p);
+    public void deleteReadingList(Long id);
 }

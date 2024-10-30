@@ -66,4 +66,9 @@ public class ReadingListServiceImpl implements ReadingListService {
             .orElseThrow(() -> new RuntimeException("Reading list not found"));
     }
 
+    @Override
+    public void deleteReadingList(Long id) {
+        readingListRepository.deleteById(id);
+    }
+
 }

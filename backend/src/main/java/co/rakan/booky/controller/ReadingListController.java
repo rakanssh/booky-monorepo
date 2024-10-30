@@ -58,4 +58,9 @@ public class ReadingListController {
     public ReadingList createReadingList(@RequestBody CreateReadingListRequest request) {
         return readingListService.createReadingList(request.getName());
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteReadingList(@PathVariable Long id) {
+        readingListService.deleteReadingList(id);
+    }
 }

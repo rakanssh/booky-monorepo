@@ -27,4 +27,6 @@ export const readingListsService = {
     api.patch<ReadingList>(`/api/reading-lists/${id}/books`, { bookId }),
   removeBook: async (id: string, bookId: string) =>
     api.delete<ReadingList>(`/api/reading-lists/${id}/books`, { bookId }),
+  deleteReadingList: async (id: string) =>
+    api.delete<ReadingList>(`/api/reading-lists/${id}`, {}),
 };
