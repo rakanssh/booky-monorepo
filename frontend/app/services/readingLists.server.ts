@@ -13,6 +13,14 @@ export const readingListsService = {
     api.get<ReadingList>(`/api/reading-lists/${id}`),
   getReadingListBooks: async (id: string, params?: PaginationParams) =>
     api.get<PaginatedResponse<Book>>(`/api/reading-lists/${id}/books`, params),
+  getAvailableBooks: async (
+    params?: PaginationParams,
+    readingListId?: string
+  ) =>
+    api.get<PaginatedResponse<Book>>(`/api/books`, {
+      ...params,
+      readingListId,
+    }),
   createReadingList: async (name: string) =>
     api.post<ReadingList>("/api/reading-lists", { name }),
 };

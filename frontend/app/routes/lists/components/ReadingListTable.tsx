@@ -1,6 +1,6 @@
 import { ActionIcon, Group, Table } from "@mantine/core";
 import { ReadingList } from "../../../types";
-import { IconEye, IconPlus } from "@tabler/icons-react";
+import { IconEdit, IconEye, IconPlus } from "@tabler/icons-react";
 import { Link } from "@remix-run/react";
 
 interface ReadingListTableProps {
@@ -37,7 +37,7 @@ export default function ReadingListTable({
                   component={Link}
                   to={`/lists/${readingList.id}/add`}
                 >
-                  <IconPlus />
+                  <IconEdit />
                 </ActionIcon>
               </Group>
             </Table.Td>
