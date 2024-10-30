@@ -30,7 +30,7 @@ export default function List() {
   const [page, setPage] = useState(
     parseInt(searchParams.get("page") ?? "1", 10)
   );
-  const [size] = useState(parseInt(searchParams.get("size") ?? "6", 10));
+  const [size] = useState(parseInt(searchParams.get("size") ?? "8", 10));
 
   const handlePageChange = (value: number) => {
     setPage(value);
