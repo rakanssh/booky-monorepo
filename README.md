@@ -34,7 +34,7 @@ The application may be ran using Docker, and comes preconfigured for development
 1. Clone the repository
 
 2. Start the application using Docker Compose
-```
+```PowerShell
 docker-compose up --build
 ```
 
@@ -48,28 +48,7 @@ The application will be available at the following external ports:
 ## Environment Variables
 Environment variable defaults are defined in the docker-compose file, enough to launch the application.
 
-### Frontend
-```env
-API_URL=http://backend:8080
-```
-
-### Backend
-```env
-DB_USER=root
-DB_PASSWORD=root
-DB_NAME=booky
-```
-
-## Project Structure
-
-```
-.
-├── backend/            # Spring Boot application
-├── frontend/           # Remix application
-└── docker-compose.yml  # docker-compose file
-```
 ## Development
-
 The application is configured for development, and supports hot-reloading and remote debugging.
 
 The following debug ports are exposed:
