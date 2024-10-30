@@ -12,7 +12,7 @@ export default function BookCatalogue({ books }: BookCatalogueProps) {
         cols={{ base: 2, sm: 3, md: 4, lg: 4 }}
         spacing={{ base: "md", sm: "lg" }}
       >
-        {books.map((book) => (
+        {books?.map((book) => (
           <Card key={book.id} padding="md" radius="md" withBorder>
             <Card.Section>
               <Image
@@ -28,7 +28,7 @@ export default function BookCatalogue({ books }: BookCatalogueProps) {
             </Text>
 
             <Text size="sm" c="dimmed">
-              {book.authors.map((author) => author.name).join(", ")}
+              {book?.authors?.map((author) => author.name).join(", ")}
             </Text>
 
             <Text size="xs" c="dimmed" mt="xs">
