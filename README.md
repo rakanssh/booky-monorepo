@@ -45,6 +45,10 @@ The application will be available at the following external ports:
   - Email: admin@admin.com
   - Password: admin
 
+### PG Admin
+
+To connect PG Admin to the database instance, add a connection using the credentials defined in the backend environment targetting the internal address of the database (If using docker) which is by default: `db:5432`
+
 ## Environment Variables
 Environment variable defaults are defined in the docker-compose file, enough to launch the application.
 
