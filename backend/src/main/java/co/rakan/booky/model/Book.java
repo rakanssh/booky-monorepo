@@ -46,6 +46,7 @@ public class Book {
         this.title = book.title;
         this.pagesNo = book.pagesNo;
         this.isbn = book.isbn;
+        this.authors = book.authors;
     }
 
     public Book() {
