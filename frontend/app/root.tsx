@@ -1,6 +1,7 @@
 import {
   Links,
   Meta,
+  MetaFunction,
   Outlet,
   Scripts,
   ScrollRestoration,
@@ -17,6 +18,13 @@ import {
 import { NavigationBar, Header } from "./components";
 import { Notifications } from "@mantine/notifications";
 import { useState } from "react";
+
+export const meta: MetaFunction = () => {
+  return [
+    { title: "Booky" },
+    { name: "description", content: "Booky: Your personal librarian" },
+  ];
+};
 
 export const links: LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },

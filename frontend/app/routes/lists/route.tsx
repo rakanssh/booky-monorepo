@@ -54,7 +54,7 @@ export default function Lists() {
       <Paper>
         <Stack gap="md">
           <AddListSection />
-          <ReadingListTable readingLists={[]} />
+          <ReadingListTable readingLists={data.content} />
           <Group justify="center">
             <Pagination
               total={data.totalPages}

@@ -1,5 +1,5 @@
 import { Image, Text, SimpleGrid, Card, Paper } from "@mantine/core";
-import { Book } from "../../../types";
+import { Book } from "../../types";
 
 export type BookCatalogueProps = {
   books: Book[];

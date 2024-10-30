@@ -1,22 +1,12 @@
-import type {
-  ActionFunctionArgs,
-  LoaderFunctionArgs,
-  MetaFunction,
-} from "@remix-run/node";
+import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { Divider, Group, Pagination, Paper, Stack, Title } from "@mantine/core";
 import { useState } from "react";
-import BookCatalogue from "./components/BookCatalogue";
+import { BookCatalogue } from "../../components";
 import AddBookSection from "./components/AddBookSection";
 import { ErrorResponse } from "../../types";
 import { booksService } from "../../services";
-export const meta: MetaFunction = () => {
-  return [
-    { title: "Booky" },
-    { name: "description", content: "Booky: Your personal librarian" },
-  ];
-};
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const url = new URL(request.url);
