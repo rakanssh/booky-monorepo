@@ -14,7 +14,10 @@ import java.util.Optional;
 
 import co.rakan.booky.model.Author;
 import co.rakan.booky.model.Book;
+import co.rakan.booky.model.ReadingList;
 import co.rakan.booky.repository.AuthorRepository;
+import co.rakan.booky.repository.ReadingListRepository;
+import co.rakan.booky.dto.BookDTO;
 import co.rakan.booky.dto.OpenLibraryAuthorResponse;
 import co.rakan.booky.dto.OpenLibraryBookResponse;
 
@@ -27,11 +30,13 @@ public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
+    private final ReadingListRepository readingListRepository;
     private final WebClient webClient;
 
-    public BookServiceImpl(BookRepository bookRepository, AuthorRepository authorRepository, WebClient.Builder webClientBuilder) {
+    public BookServiceImpl(BookRepository bookRepository, AuthorRepository authorRepository, ReadingListRepository readingListRepository, WebClient.Builder webClientBuilder) {
         this.bookRepository = bookRepository;
         this.authorRepository = authorRepository;
+        this.readingListRepository = readingListRepository;
         this.webClient = webClientBuilder
             .baseUrl(OPEN_LIBRARY_BASE_URL)
             .clientConnector(new ReactorClientHttpConnector(HttpClient.create()
@@ -40,8 +45,13 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Page<Book> getAllBooks(Pageable p) {
-        return bookRepository.findAll(p);
+    public Page<BookDTO> getAllBooks(Pageable p) {
+        return bookRepository.findAll(p).map(
+            book -> {
+                BookDTO bookDTO = new BookDTO(book);
+                return bookDTO;
+            }
+        );
     }   
 
     @Override
@@ -72,6 +82,19 @@ public class BookServiceImpl implements BookService {
         }
         bookRepository.save(newBook);
         return newBook;
+    }
+
+    @Override
+    public Page<BookDTO> getAllBooksWithListStatus(Pageable p, Long readingListId) {
+        Page<Book> books = bookRepository.findAll(p);
+        ReadingList readingList = readingListRepository.findById(readingListId)
+            .orElseThrow(() -> new Error("Reading list not found"));
+        Page<BookDTO> bookDTOs = books.map(book -> {
+            BookDTO bookDTO = new BookDTO(book);
+            bookDTO.setInReadingList(readingList.getBooks().contains(book));
+            return bookDTO;
+        });
+        return bookDTOs;
     }
 
     private OpenLibraryBookResponse getBookByIsbn(String isbn) {

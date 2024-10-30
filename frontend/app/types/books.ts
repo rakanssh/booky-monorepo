@@ -6,6 +6,7 @@ export type Book = {
   authors: Author[];
   pagesNo: number;
   isbn: string;
+  inReadingList: boolean;
 };
 
 export type AddBookDto = {

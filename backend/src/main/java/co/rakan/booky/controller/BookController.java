@@ -3,6 +3,7 @@ package co.rakan.booky.controller;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import co.rakan.booky.service.BookService;
+import co.rakan.booky.dto.BookDTO;
 import co.rakan.booky.model.Book;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,7 +28,10 @@ public class BookController {
     }
 
     @GetMapping
-    public Page<Book> getAllBooks(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+    public Page<BookDTO> getAllBooks(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(required = false) Long readingListId) {
+        if (readingListId != null) {
+            return bookService.getAllBooksWithListStatus(PageRequest.of(page, size), readingListId);
+        }
         return bookService.getAllBooks(PageRequest.of(page, size));
     }
 

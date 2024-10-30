@@ -40,4 +40,14 @@ public class Book {
     @ManyToMany(mappedBy = "books")
     @JsonBackReference
     private List<ReadingList> readingLists;
+
+    public Book(Book book) {
+        this.id = book.id;
+        this.title = book.title;
+        this.pagesNo = book.pagesNo;
+        this.isbn = book.isbn;
+    }
+
+    public Book() {
+    }
 }
